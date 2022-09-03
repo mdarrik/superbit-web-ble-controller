@@ -1,0 +1,182 @@
+@import "modern-css-reset";
+
+:root {
+  --surface-shadow: 200 50% 3%;
+  --shadow-strength: 80%;
+  --radial-shadow: 0 2.8px 2.2px
+      hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 3%)),
+    0 6.7px 5.3px hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 1%)),
+    0 12.5px 10px hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 2%)),
+    0 22.3px 17.9px
+      hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 2%)),
+    0 41.8px 33.4px
+      hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 3%)),
+    0 100px 80px hsl(var(--surface-shadow) / var(--shadow-strength));
+  --surface-1: var(--gray-0);
+  --surface-2: var(--gray-2);
+  --surface-3: var(--gray-3);
+  --surface-4: var(--gray-4);
+}
+
+p {
+  margin-block-end: var(--size-fluid-2);
+  max-width: 80ch;
+}
+
+h1 {
+  margin-block-end: var(--size-fluid-3);
+}
+
+body {
+  margin-inline: var(--size-fluid-4);
+  margin-block-end: var(--size-fluid-4);
+}
+
+button {
+  cursor: pointer;
+}
+button:hover,
+button:focus {
+  outline: 2px groove currentColor;
+  outline: 2px groove invert;
+}
+.card-outline {
+  background: var(--surface-3);
+  border: 1px solid var(--surface-1);
+  padding: var(--size-4);
+  border-radius: var(--radius-3);
+  box-shadow: var(--shadow-2);
+}
+
+.controller-button {
+  width: var(--size-fluid-6);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gray-8);
+  border-radius: var(--radius-3);
+  box-shadow: 0 1rem 0.5rem -0.5rem;
+  box-shadow: var(--radial-shadow);
+  border: 1px solid hsl(var(--gray-8) 10% 50% / 15%);
+  color: var(--gray-5);
+  cursor: pointer;
+}
+button.controller-button:focus,
+button.controller-button:hover {
+  outline: 6px solid var(--gray-2);
+}
+
+button.controller-button:active {
+  box-shadow: unset;
+  background-color: var(--gray-6);
+  color: var(--gray-1);
+}
+
+#unsupported-browser-warning:not([data-warning-show]),
+/* main:not([data-bluetooth-connected]) #superbit-controller-controller, */
+main:not([data-bluetooth-connected]) #disconnect-bluetooth-button,
+main[data-bluetooth-connected] #connect-bluetooth-button {
+  display: none;
+}
+
+.bluetooth-button {
+  font-size: var(--font-size-fluid-0);
+  font-weight: var(--font-weight-7);
+  padding-inline: var(--size-3);
+  padding-block: var(--size-3);
+  border: var(--border-size-2) solid var(--blue-3);
+  color: var(--gray-0);
+  background-color: var(--blue-3);
+  border-radius: var(--radius-2);
+}
+
+.superbit-controller > h2 {
+  font-size: var(--font-size-fluid-3);
+  font-weight: var(--font-weight-8);
+}
+.superbit-controller {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-4);
+}
+
+.movement-controller-wrapper > .heading {
+  display: flex;
+  justify-content: center;
+  margin-block-end: var(--size-fluid-3);
+  font-size: var(--font-size-fluid-3);
+}
+
+.movement-controller-wrapper {
+  padding-block-end: var(--size-7);
+}
+
+.movement-controller {
+  display: grid;
+  grid-template-rows: 1fr;
+  justify-content: center;
+  min-height: fit-content;
+}
+
+.movement-controller > button[data-direction="forward"],
+.movement-controller > button[data-direction="backwards"] {
+  grid-column: 2 / 3;
+  justify-self: center;
+}
+
+.movement-controller > button[data-direction="left"] {
+  grid-column: 1 / 2;
+  justify-self: end;
+}
+
+.movement-controller > button[data-direction="right"] {
+  grid-column: 3 / 4;
+  justify-self: start;
+}
+
+@media screen and (min-width: 40rem) {
+  .movement-controller {
+    padding-inline: var(--size-fluid-3);
+  }
+}
+
+[data-section="arm-controls"] {
+  margin-block-start: var(--size-8);
+  font-weight: var(--font-weight-8);
+  font-size: var(--font-size-4);
+  border: 4px solid purple;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+[data-section="arm-controls"] > button[data-command="fire"] {
+  background-color: var(--red-7);
+  color: var(--gray-1);
+}
+[data-section="arm-controls"] > button[data-command="fire"]:active {
+  background-color: var(--red-9);
+}
+[data-section="arm-controls"] > button[data-command="reset"] {
+  background-color: var(--gray-2);
+  color: var(--gray-9);
+}
+[data-section="arm-controls"] > button[data-command="reset"]:active {
+  background-color: var(--gray-4);
+}
+
+/* .movement-controller > button[data-direction="backwards"] {
+  grid-column: 2 / 4;
+} */
+
+.log-data {
+  font-size: var(--font-size-fluid-2);
+  display: flex;
+  /* justify-content: center; */
+  align-items: flex-start;
+  margin-block: var(--size-fluid-6);
+  padding-inline: var(--size-fluid-5);
+  width: 100%;
+  height: 100%;
+  background-color: var(--gray-3);
+}

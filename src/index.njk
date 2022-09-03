@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ siteTitle }}</title>
+    <style>
+      /* prettier-ignore */
+      {{css | safe}}
+    </style>
+    <script type="module" src="/js/index.js"></script>
+  </head>
+
+  <body>
+    <h1>Superbit Catapult BLE Controller</h1>
+    <main>
+      <p>
+        Controller for the Superbit BLE demo written in rust. See the
+        <a
+          href="https://github.com/mdarrik/superbit-projects/tree/b83c62630cda2792479da2e9be30c5a9bfdd2101/catapult/bluetooth-control"
+          >superbit control demo</a
+        >
+        in the
+        <a href="https://github.com/mdarrik/superbit-projects">
+          mdarrik/superbit-projects repo</a
+        >
+        for the bluetooth service setup.
+      </p>
+      <p>
+        Note that web bluetooth is still experimental and only supported in some
+        browsers. It's worth reading the official stance of Safari and Firefox
+        linked in the
+        <a
+          href="https://github.com/WebBluetoothCG/web-bluetooth/blob/main/implementation-status.md#firefox"
+          >implementation status document for WebBluetooth</a
+        >. You can find all the source code for this website here:
+        <a href="https://github.com/mdarrik/superbit-web-ble-controller"
+          >https://github.com/mdarrik/superbit-web-ble-controller</a
+        >
+      </p>
+
+      <section id="bluetooth-connection-controls">
+        <button
+          type="button"
+          id="connect-bluetooth-button"
+          type="button"
+          class="bluetooth-button"
+        >
+          Connect Bluetooth Device
+        </button>
+        <button
+          type="button"
+          id="disconnect-bluetooth-button"
+          class="bluetooth-button"
+        >
+          Disconnect Bluetooth Device
+        </button>
+        <p id="unsupported-browser-warning" class="notification">
+          It doesn't look like web bluetooth is supported in your current
+          browser. See
+          <a href="https://caniuse.com/web-bluetooth">
+            "Can I use" data for web bluetooth
+          </a>
+          to see which browsers are currently supported.
+        </p>
+      </section>
+      <section id="superbit-controller-controller" class="superbit-controller">
+        <h2>Control Your Superbit Catapult</h2>
+        <section class="movement-controller-wrapper card-outline">
+          <h3 class="heading">Drive</h3>
+          <div class="movement-controller" data-section="movement-controller">
+            <button
+              id="controller-forward-button"
+              data-type="direction"
+              data-direction="forward"
+              type="button"
+              aria-label="forward"
+              class="controller-button"
+            >
+              {% include './static/arrow-upward.svg' %}
+            </button>
+            <button
+              id="controller-left-button"
+              data-type="direction"
+              data-direction="left"
+              type="button"
+              aria-label="left"
+              class="controller-button"
+            >
+              {% include './static/arrow-back.svg' %}
+            </button>
+            <button
+              id="controller-right-button"
+              data-type="direction"
+              data-direction="right"
+              type="button"
+              aria-label="right"
+              class="controller-button"
+            >
+              {% include './static/arrow-forward.svg' %}
+            </button>
+            <button
+              id="controller-backwards-button"
+              data-type="direction"
+              data-direction="backwards"
+              type="button"
+              aria-label="backwards"
+              class="controller-button"
+            >
+              {% include './static/arrow-downward.svg' %}
+            </button>
+          </div>
+          <div data-section="arm-controls">
+            <button
+              id="catapult-arm-fire-button"
+              type="button"
+              data-type="catapult"
+              data-command="fire"
+              class="controller-button"
+            >
+              Fire
+            </button>
+            <button
+              type="button"
+              id="catapult-arm-reset-button"
+              data-type="catapult"
+              data-command="reset"
+              class="controller-button"
+            >
+              Reset
+            </button>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

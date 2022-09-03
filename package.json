@@ -1,0 +1,32 @@
+{
+  "name": "superbit-web-ble-controller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdarrik/superbit-web-ble-controller.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdarrik/superbit-web-ble-controller/issues"
+  },
+  "homepage": "https://github.com/mdarrik/superbit-web-ble-controller#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.0-canary.15",
+    "@netlify/functions": "^1.2.0",
+    "@types/web-bluetooth": "^0.0.15",
+    "modern-css-reset": "^1.4.0",
+    "open-props": "^1.4.14",
+    "postcss": "^8.4.16",
+    "postcss-import": "^15.0.0",
+    "postcss-jit-props": "^1.0.7"
+  }
+}
