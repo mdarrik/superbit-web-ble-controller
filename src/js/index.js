@@ -5,6 +5,8 @@ import {
   GattServiceCharacteristicIds,
 } from "./superbit-constants.js";
 import { registerMovementController } from "./movement-controller.js";
+import { registerCatapultArmControls } from "./catapult-arm-controller.js";
+import { registerLedControls } from "./led-controller.js";
 
 const mainElement = document.getElementsByTagName("main")[0];
 
@@ -37,16 +39,10 @@ async function connectBluetoothDevice() {
         SuperbitGattServiceUuid
       );
       globalThis.superbitGattService = superbitGattService;
+      globalThis.bleWriteInProgress = false;
     }
   } catch (e) {
-    console.log(JSON.stringify(e, Object.getOwnPropertyNames(e)));
-    await fetch("./.netlify/functions/log-errors", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(e, Object.getOwnPropertyNames(e)),
-    });
+    console.error(e);
   }
 }
 
@@ -55,6 +51,8 @@ document
   .addEventListener("click", connectBluetoothDevice);
 
 registerMovementController();
+registerCatapultArmControls();
+registerLedControls();
 
 function showUnsupportedBrowserWarning() {
   const unsupportedBrowserWarningElement = document.getElementById(
@@ -71,4 +69,7 @@ async function handleBluetoothDisconnected() {
   } catch {}
   globalThis.superbitDevice = null;
   globalThis.superbitGattService = null;
+  globalThis.ledService = null;
+  globalThis.directionService = null;
+  globalThis.armService = null;
 }

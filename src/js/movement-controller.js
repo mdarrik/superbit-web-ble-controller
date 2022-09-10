@@ -1,5 +1,4 @@
 import { GattServiceCharacteristicIds } from "./superbit-constants.js";
-import { logToDocument } from "./utils.js";
 
 const movementController = document.getElementsByClassName(
   "movement-controller"
@@ -11,10 +10,6 @@ const movementMap = {
   right: Uint8Array.of(2),
   backwards: Uint8Array.of(3),
 };
-
-let directionService;
-let count = 0;
-let inProgress = false;
 
 export function registerMovementController() {
   let mousedownInterval = null;
@@ -29,7 +24,6 @@ export function registerMovementController() {
   movementController.addEventListener("touchend", () => {
     clearInterval(mousedownInterval);
     mousedownInterval = null;
-    logToDocument("touchEnd");
     mousedownInProgress = false;
   });
   movementController.addEventListener("click", handleButtonActivation);
@@ -43,24 +37,27 @@ async function handleButtonActivation(event) {
   const superbitGattService = globalThis.superbitGattService;
   /**@type {HTMLButtonElement} */
   const buttonClicked = event.target.closest("button");
+  const directionToMove = buttonClicked.dataset.direction;
+  const directionWriteData = movementMap[directionToMove];
   if (
     !superbitDevice ||
     !superbitDevice.gatt.connected ||
     !superbitGattService ||
     !buttonClicked ||
-    inProgress
+    !directionWriteData ||
+    globalThis.bleWriteInProgress
   ) {
     return;
   }
+  /**@type {BluetoothRemoteGATTCharacteristic} */
+  let directionService = globalThis.directionService;
   if (!directionService) {
     directionService = await superbitGattService.getCharacteristic(
       GattServiceCharacteristicIds.directionService
     );
+    globalThis.directionService = directionService;
   }
-  inProgress = true;
-  const directionToMove = buttonClicked.dataset.direction;
-  const directionWriteData = movementMap[directionToMove];
-  console.log(debounceInfo.timer, !debounceInfo.timer);
+  globalThis.bleWriteInProgress = true;
   if (directionWriteData && !debounceInfo.timer) {
     clearTimeout(debounceInfo.timer);
     await directionService.writeValueWithoutResponse(directionWriteData);
@@ -69,5 +66,5 @@ async function handleButtonActivation(event) {
       debounceInfo.direction = null;
     }, 200);
   }
-  inProgress = false;
+  globalThis.bleWriteInProgress = false;
 }
